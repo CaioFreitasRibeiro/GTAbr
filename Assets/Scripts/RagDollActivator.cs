@@ -63,6 +63,4 @@ public class RagdollActivator : MonoBehaviour
 
         animator.enabled = !state;
     }
-
-
 }

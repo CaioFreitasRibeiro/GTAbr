@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CarControler : MonoBehaviour
@@ -14,6 +15,23 @@ public class CarControler : MonoBehaviour
 
     public float motorForce = 1500f;
     public float maxSteerAngle = 30f;
+
+    public GameObject playerPrefab; // Prefab do jogador a ser instanciado
+    public CameraController mainCamera; // Referência à câmera principal do jogador
+
+    private void Start()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Object.FindAnyObjectByType<CameraController>();
+        }
+    }
+
+    private void Update()
+    {
+        // Verifica se o jogador pressionou a tecla E para sair do carro
+        SwapToplayer();
+    }
 
     void FixedUpdate()
     {
@@ -40,7 +58,6 @@ public class CarControler : MonoBehaviour
             rearLeft.brakeTorque = 0f;
             rearRight.brakeTorque = 0f;
         }
-
     }
 
     void UpdateWheels()
@@ -60,4 +77,18 @@ public class CarControler : MonoBehaviour
         trans.rotation = rot;
     }
 
+    private void SwapToplayer()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Instanciar novo objeto do jogador
+            Vector3 offset = new Vector3(1.5f, 0, 0); // Ajuste de posição para o jogador sair do carro
+            GameObject currentPlayer = Instantiate(playerPrefab, transform.position + offset, transform.rotation); // O Player "saiu" do carro
+
+            mainCamera.target = currentPlayer.transform; // Atualiza a câmera para seguir o novo jogador 
+
+            // desativar esse script
+            this.enabled = false;
+        }
+    }
 }
