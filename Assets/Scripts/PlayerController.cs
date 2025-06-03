@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        canMove = true;
         RagDoll = GetComponent<RagdollActivator>();
         //RagDoll.enabled = false;
     }

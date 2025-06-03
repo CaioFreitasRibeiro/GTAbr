@@ -1,79 +1,63 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RagdollActivator : MonoBehaviour
 {
-    public Rigidbody[] ragdollBodies;
     public Animator animator;
-    public PlayerController playerController;
-    public float fallThreshold = -10f;
-    public float collisionForceThreshold = 10f;
+    public Rigidbody[] ragdollBodies;
+    public Collider[] ragdollColliders;
+    public Collider mainCollider;
+    public MonoBehaviour playerController;
+    public PlayerController pc;
+    public float timeToReload = 2f;
 
-    private bool isRagdoll = false;
+    private bool isDead = false;
 
     void Start()
     {
-        DisableRagdoll();
+        SetRagdollState(false);
     }
 
     void Update()
     {
-        if (!isRagdoll && transform.position.y < fallThreshold)
+        if (Input.GetKeyDown(KeyCode.K) && !isDead)
         {
-            ActivateRagdoll();
+            Die();
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void Die()
     {
-        if (!isRagdoll && collision.relativeVelocity.magnitude > collisionForceThreshold)
-        {
-            ActivateRagdoll();
-        }
-    }
+        isDead = true;
+        SetRagdollState(true);
 
-    public void ActivateRagdoll()
-    {
-        isRagdoll = true;
         animator.enabled = false;
-        playerController.canMove = false;
+        mainCollider.enabled = false;
+        playerController.enabled = false;
+        pc.canMove = false;
 
-        foreach (Rigidbody rb in ragdollBodies)
-        {
-            rb.isKinematic = false;
-        }
-
-        Invoke("GetUpTransition", 3f); // Espera 3 segundos para levantar
+        Invoke("ReloadScene", timeToReload);
     }
 
-    void GetUpTransition()
+    void ReloadScene()
     {
-        DisableRagdoll();
-        animator.enabled = true;
-
-        // Define o estado no Animator
-        animator.SetBool("isGettingUp", true);
-
-        // Espera a animação terminar para reativar o movimento
-        float getUpDuration = animator.GetCurrentAnimatorStateInfo(0).length;
-        Invoke("FinishGettingUp", 2f); // Ajuste esse valor conforme a duração da animação
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OnGetUpFinished()
-    {
-        animator.SetBool("isGettingUp", false);
-        playerController.canMove = true;
-    }
-
-    void DisableRagdoll()
+    private void SetRagdollState(bool state)
     {
         foreach (Rigidbody rb in ragdollBodies)
         {
-            rb.isKinematic = true;
+            rb.isKinematic = !state;
         }
+
+        foreach (Collider col in ragdollColliders)
+        {
+            col.enabled = state;
+        }
+
+        animator.enabled = !state;
     }
 
-    void EnableMovement()
-    {
-        playerController.canMove = true;
-    }
+
 }
