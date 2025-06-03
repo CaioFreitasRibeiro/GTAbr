@@ -11,7 +11,7 @@ public class RagdollActivator : MonoBehaviour
     public PlayerController pc;
     public float timeToReload = 2f;
 
-    private bool isDead = false;
+    public bool isDead = false;
 
     void Start()
     {
@@ -42,6 +42,11 @@ public class RagdollActivator : MonoBehaviour
     void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public bool IsRagdollActive()
+    {
+        return isDead;
     }
 
     private void SetRagdollState(bool state)

@@ -9,28 +9,26 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        canMove = true;
         RagDoll = GetComponent<RagdollActivator>();
-        //RagDoll.enabled = false;
     }
 
     private void Update()
     {
-        if (!canMove) return;
+        if (!canMove || RagDoll == null || RagDoll.IsRagdollActive()) return;
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-        Vector3 move = new Vector3(h, 0, v);
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-        if (move.magnitude > 0.1f && RagDoll.enabled == true)
+        Vector3 move = new Vector3(h, 0, v).normalized;
+
+        // Ativa animação de andar se estiver se movendo
+        bool isWalking = move.magnitude > 0f;
+        animator.SetBool("isWalking", isWalking);
+
+        if (isWalking)
         {
-            animator.SetBool("isWalking", true);
             transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
-            transform.forward = move; // Rotaciona para direção do movimento
-        }
-        else if (RagDoll.enabled == false)
-        {
-            animator.SetBool("isWalking", false);
+            transform.forward = move;
         }
     }
 }
