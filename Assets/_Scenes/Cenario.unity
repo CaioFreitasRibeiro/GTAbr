@@ -4237,6 +4237,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: CarroDefinitivo
       objectReference: {fileID: 0}
+    - target: {fileID: 6225556155060869828, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225556155060869828, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakTorque
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247008269462852829, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8247008269462852829, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakTorque
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064928233959820215, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064928233959820215, guid: 02f5b1cb32d7d6049afc0a0db52d74d3, type: 3}
+      propertyPath: m_BreakTorque
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
