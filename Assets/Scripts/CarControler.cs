@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CarControler : MonoBehaviour
 {
@@ -31,6 +32,16 @@ public class CarControler : MonoBehaviour
     {
         // Verifica se o jogador pressionou a tecla E para sair do carro
         SwapToplayer();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadScene();
+        }
+    }
+
+    void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void FixedUpdate()

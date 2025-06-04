@@ -7,21 +7,23 @@ public class CameraController : MonoBehaviour
     public float smoothSpeed = 0.125f;                // Suavização
     private Vector3 initialOffsetDirection;
 
-    private RagdollActivator r; 
+    private RagdollActivator ragdollController;      // Referência ao controle de ragdoll
 
     void Start()
     {
         if (target != null)
         {
+            // Offset fixo em relação ao jogador
             initialOffsetDirection = transform.position - target.position;
 
-            r = target.GetComponent<RagdollActivator>();
+            // Tenta obter o componente RagdollController
+            ragdollController = target.GetComponent<RagdollActivator>();
         }
     }
 
     void LateUpdate()
     {
-        if (target == null || (r!= null && r.isDead))
+        if (target == null || (ragdollController != null && ragdollController.isDead))
             return;
 
         Vector3 desiredPosition = target.position + initialOffsetDirection;

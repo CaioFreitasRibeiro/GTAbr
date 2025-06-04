@@ -63,4 +63,20 @@ public class RagdollActivator : MonoBehaviour
 
         animator.enabled = !state;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Colidiu com: " + collision.gameObject.name);
+
+        if (collision.relativeVelocity.magnitude > 5f && !isDead) // Dano de queda
+        {
+            Die();
+        }
+
+        if (collision.gameObject.CompareTag("Wall")) // Colisão com parede
+        {
+            Debug.Log("Colidiu com a parede, ativando ragdoll");
+            Die();
+        }
+    }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,16 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
 
         SwapToCar();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ReloadScene();
+        }
+    }
+
+    void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void MovePlayer()
