@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     {
         mainCamera = Object.FindAnyObjectByType<CameraController>();
 
+        mainCamera.ragdollController = GetComponent<RagdollActivator>();
+
         RagDoll = GetComponent<RagdollActivator>();
     }
 
